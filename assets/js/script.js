@@ -1,5 +1,5 @@
-let searchFormEl = "#city-search-form";
-let searchInputEl = "#search-btn";
+let searchFormEl = document.querySelector("#city-search-form");
+let searchInputEl = document.querySelector("#city-input");
 // fetch weather information 
 
 let getCityWeather = function(cityName){
@@ -15,3 +15,17 @@ let getCityWeather = function(cityName){
         });
     });
 };
+
+let formSubmitHandler = function(event){
+    event.preventDefault();
+    let city = searchInputEl.value.trim();
+
+    if(city){
+        getCityWeather(city);
+        searchInputEl.value = "";
+    } else {
+        alert("Please Enter a city");
+    }
+};
+
+searchFormEl.addEventListener("submit", formSubmitHandler);
