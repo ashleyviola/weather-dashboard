@@ -1,0 +1,138 @@
+*{
+    font-family: 'Outfit', sans-serif;
+}
+header{
+    background-color: white;
+    color: white;
+    padding: 5px;
+    box-shadow: 0 5px 10px #212629;
+
+}
+body{
+    background: no-repeat center center fixed linear-gradient(144deg, #054269, #522c7c);
+    background-size: cover;
+}
+h1{
+    font-size: 34px;
+    font-weight: 800;
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+    background-color: white;
+    background-image: linear-gradient(45deg, #054269,#522c7c);
+    background-size: 100%;
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+}
+h2{
+    font-size: 28px;
+    color: #212629;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+h3{
+    font-size: 24px;
+    color: white;
+}
+h4{
+    font-size: 18px;
+    color: #212629;
+}
+p{
+    font-size: 18px;
+    font-weight: 300;
+    color: #212629;
+}
+span{
+    font-size: 18px;
+    color: #212629;
+}
+#city-search-form h2{
+    font-size: 20px;
+    color: white;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 25px 0;
+
+}
+.form-input{
+    width: 70%;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    text-transform: capitalize;
+}
+.searchBtn{
+    width: 20%;
+    background-color: #212629;
+    opacity: 85%;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    text-transform: capitalize;
+}
+.searchBtn:active,
+.searchBtn:hover{
+   transform:scale(1.1)
+}
+#past-search-list{
+    list-style: none;
+    padding: 0;
+}
+.saved-item{
+    padding: 5px 0;
+    text-align: start;
+}
+#past-search-list button{
+    background-color: #e63246;
+    opacity: 85%;
+    color: white;
+    border: 0;
+    height: 30px;
+    border-radius: 3px;
+    text-transform: capitalize;
+}
+#past-search-list button:active,
+#past-search-list button:hover{
+    transform: scale(1.15);
+}
+#past-search-list button p {
+    text-align: center;
+}
+.selected-city{
+    background-color: white;
+    margin: 25px;
+    padding: 15px;
+    border-radius: 3px;
+    box-shadow: 0 5px 15px;
+}
+.city-name{
+    color: white;
+}
+#current-city-name img{
+    width: 75px;
+}
+#todays-date{
+    font-size: 24px;
+    font-weight: 300;
+}
+#low-uv-index {
+    background-color: green;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    
+}
+#moderate-uv-index{
+    background-color: yellow;
+}
+#high-uv-index{
+    background-color: red;
+}
+#forecast-weather-icon{
+    width: 50px;
+}

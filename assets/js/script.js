@@ -2,6 +2,9 @@ let searchFormEl = document.querySelector("#city-search-form");
 let searchInputEl = document.querySelector("#city-input");
 let currentWeatherEl = document.querySelector("#current-weather-container");
 let fiveDayForcastEl = document.querySelector("#five-day-forecast");
+let savedSearches = document.querySelector("#past-search-list");
+
+let recentSearches = [];
 
 // weather api key
 let apiKey = "4ac5ffd5c7ed9414f0435b0f9c15caa7";
@@ -34,14 +37,33 @@ let getCityWeather = function(cityName){
 // search button function 
 let formSubmitHandler = function(event){
     event.preventDefault();
-    let city = searchInputEl.value.trim();
+    let cityInput = searchInputEl.value.trim();
 
-    if(city){
-        getCityWeather(city);
-        searchInputEl.value = "";
-    } else {
+    document.getElementById("selected-city").style.display="block";
+    //save recent search to array 
+    let recentSearchObj = {
+        cityName: cityInput
+    };
+
+    if(!cityInput){
         alert("Please Enter a city");
+        return false;
     }
+    
+    if(recentSearches.length >= 0){
+        $('#past-search-list').each(function(){
+            if($(".saved-item-btn").hasClass(cityInput)){
+                console.log("this has already been searched")
+                getCityWeather(cityInput);
+            } else {
+                console.log("this hasn't been searched")
+                getCityWeather(cityInput);
+                createRecentSearch(recentSearchObj)
+            }
+        });
+    }
+
+    searchInputEl.value = "";
 };
 
 // display current weather
@@ -52,10 +74,11 @@ let displayCurrentWeather = function(currentWeather, searchCity){
 
     // create city name 
     let currentCityNameEl = document.createElement("h2");
-    currentCityNameEl.textContent = searchCity +" ";
+    currentCityNameEl.textContent = searchCity +" | ";
     currentCityNameEl.id = "current-city-name";
     let todaysdate = document.createElement("span");
     todaysdate.textContent = moment().format("l");
+    todaysdate.id = "todays-date"
     currentWeatherEl.appendChild(currentCityNameEl);
     currentCityNameEl.appendChild(todaysdate);
 
@@ -72,7 +95,7 @@ let displayCurrentWeather = function(currentWeather, searchCity){
     currentWeatherTempText.textContent = "Temp: ";
     currentWeatherTempText.className = "current-weather-text";
     let currentWeatherTemp = document.createElement("span");
-    currentWeatherTemp.textContent = currentWeather.current.temp + "\u00B0";
+    currentWeatherTemp.textContent = currentWeather.current.temp + "\u00B0" + "F";
     currentWeatherTemp.className = "current-weather-text";
     currentWeatherEl.appendChild(currentWeatherTempText);
     currentWeatherTempText.appendChild(currentWeatherTemp);
@@ -102,16 +125,22 @@ let displayCurrentWeather = function(currentWeather, searchCity){
     currentUvIndexText.className = "current-weather-text";
     let currentUvIndex = document.createElement("span");
     currentUvIndex.textContent = currentWeather.current.uvi;
+    
+    if(currentUvIndex.textContent <= 2){
+            console.log("low uv");
+            currentUvIndex.id = "low-uv-index";
+    } else if (currentUvIndex.textContent >=3 && currentUvIndex <= 5){
+            console.log("moderate uv");
+            currentUvIndex.id = "moderate-uv-index";
+    } else if (currentUvIndex.textContent >=6){
+            console.log("high uv");
+            currentUvIndex.id = "high-uv-index";
+    }
+
     currentWeatherEl.appendChild(currentUvIndexText);
     currentUvIndexText.appendChild(currentUvIndex);
-        if(currentUvIndex = 0 && currentUvIndex <= 2){
-            currentUvIndex.id = "low-uv-index";
-        } else if (currentUvIndex >= 3 && currentUvIndex <= 5){
-            currentUvIndex.id = "moderate-uv-index";
-        } else if (currentUvIndex >= 6){
-            currentUvIndex.id = "high-uv-index";
-        }
-}
+        
+};
 let displayForecastWeather = function(currentWeather, searchCity){
     fiveDayForcastEl.textContent = "";
 
@@ -125,7 +154,7 @@ let displayForecastWeather = function(currentWeather, searchCity){
     for(let i = 0; i < (currentWeather.daily.length - 3); i++){
             // day one forecast 
         let dayOneForecastCardSize = document.createElement("div");
-            dayOneForecastCardSize.className = "col-2"
+            dayOneForecastCardSize.className = "col"
             fiveDayForcastEl.appendChild(dayOneForecastCardSize);
 
         let dayOneForecastCard = document.createElement("div");
@@ -149,7 +178,7 @@ let displayForecastWeather = function(currentWeather, searchCity){
             dayOneForecastCardBody.appendChild(dayOneForecastIcon);
 
         let dayOneForecastTemp = document.createElement("p");
-            dayOneForecastTemp.textContent = "Temp: " + currentWeather.daily[i].temp.day;
+            dayOneForecastTemp.textContent = "Temp: " + currentWeather.daily[i].temp.day + "\u00B0" + "F";
             dayOneForecastTemp.id = "forecast-temp";
             dayOneForecastCardBody.appendChild(dayOneForecastTemp);
 
@@ -164,4 +193,41 @@ let displayForecastWeather = function(currentWeather, searchCity){
             dayOneForecastCardBody.appendChild(dayOneForecastHumidity) 
     }
 };
+let createRecentSearch = function(recentSearchObject){
+    let cityListItemEl = document.createElement("li");
+    cityListItemEl.className = "saved-item";
+    cityListItemEl.addEventListener("click", function(){
+        console.log("click");
+        console.log(recentSearchObject.cityName);
+        getCityWeather(recentSearchObject.cityName);
+    });
+
+    let cityListItemBtn = document.createElement("button");
+    cityListItemBtn.className = "saved-item-btn " + recentSearchObject.cityName;
+    cityListItemBtn.innerHTML = "<p class = 'city-name'>" + recentSearchObject.cityName + "</p>";
+    savedSearches.appendChild(cityListItemEl);
+    cityListItemEl.appendChild(cityListItemBtn);
+    console.log(cityListItemBtn);
+    recentSearches.push(recentSearchObject);
+
+    saveSearchInput();
+};
+
+let saveSearchInput = function(){
+    localStorage.setItem("cityName", JSON.stringify(recentSearches));
+};
+
+let loadSearches = function(){
+    let savedSearches = localStorage.getItem("cityName");
+    if(!savedSearches){
+        return false;
+    }
+    savedSearches = JSON.parse(savedSearches);
+    for (let i = 0; i < savedSearches.length; i++){
+        createRecentSearch(savedSearches[i]);
+    }
+    return savedSearches;
+}
 searchFormEl.addEventListener("submit", formSubmitHandler);
+
+loadSearches();
