@@ -3,7 +3,7 @@ let searchInputEl = document.querySelector("#city-input");
 let currentWeatherEl = document.querySelector("#current-weather-container");
 let fiveDayForcastEl = document.querySelector("#five-day-forecast");
 let savedSearches = document.querySelector("#past-search-list");
-
+let currentCitySectionEl = document.getElementById("selected-city");
 let recentSearches = [];
 
 // weather api key
@@ -39,7 +39,8 @@ let formSubmitHandler = function(event){
     event.preventDefault();
     let cityInput = searchInputEl.value.trim();
 
-    document.getElementById("selected-city").style.display="block";
+    currentCitySectionEl.style.display="block";
+
     //save recent search to array 
     let recentSearchObj = {
         cityName: cityInput
@@ -79,7 +80,7 @@ let displayCurrentWeather = function(currentWeather, searchCity){
     let todaysdate = document.createElement("span");
     todaysdate.textContent = moment().format("l");
     todaysdate.id = "todays-date"
-    currentWeatherEl.appendChild(currentCityNameEl);
+    currentWeatherEl.prepend(currentCityNameEl);
     currentCityNameEl.appendChild(todaysdate);
 
     // create weather icon 
