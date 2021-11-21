@@ -16,7 +16,7 @@
     </header>
     <main class="container"> 
        <div class="row">
-            <div class="col-12 search-column">
+            <div class="col-3 search-column">
                 <form class="border" id="city-search-form">
                     <h2>Search for a City</h2>
                     <input class="form-input" id="city-input" type="text">
@@ -26,16 +26,12 @@
                 </form>
                 <div class="past-search" id="past-search-buttons"></div>
             </div>
-            <div class="col-12">
-                <div class="row border selected-city" id="current-forecast">
-                    <div class="col-12">
-                        <h2 id="searched-city"></h2>
-                        <div class="list-group" id="current-weather-container"></div>
+            <div class="col-9">
+                <div class="row border selected-city">
+                    <div class="col-12 list-group" id="current-weather-container">
                     </div>
                 </div>
                 <div class="row border" id="five-day-forecast">
-                    <h2 class="col-12" id="forecast"></h2>
-                    <div id="five-day-container"></div>
                 </div>
             </div>
         </div>
