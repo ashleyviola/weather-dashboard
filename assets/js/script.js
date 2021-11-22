@@ -130,7 +130,7 @@ let displayCurrentWeather = function(currentWeather, searchCity){
     if(currentUvIndex.textContent <= 2){
             console.log("low uv");
             currentUvIndex.id = "low-uv-index";
-    } else if (currentUvIndex.textContent >=3 && currentUvIndex <= 5){
+    } else if (currentUvIndex.textContent >=3 || currentUvIndex <= 5){
             console.log("moderate uv");
             currentUvIndex.id = "moderate-uv-index";
     } else if (currentUvIndex.textContent >=6){
