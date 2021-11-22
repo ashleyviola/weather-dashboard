@@ -167,7 +167,7 @@ let displayForecastWeather = function(currentWeather, searchCity){
             dayOneForecastCard.appendChild(dayOneForecastCardBody);
 
         let dayOneForecastDate = document.createElement("h4");
-            dayOneForecastDate.textContent = moment().add(1,'d').format("l");
+            dayOneForecastDate.textContent = moment().add(i + 1,'d').format("l");
             dayOneForecastDate.className = "card-title";
             dayOneForecastCardBody.appendChild(dayOneForecastDate);
 
